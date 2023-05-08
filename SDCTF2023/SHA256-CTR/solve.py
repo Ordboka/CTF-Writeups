@@ -10,22 +10,22 @@ n_blocks_in_flag = 2
 # Get hashes of counter
 hashes = []
 for i in range(n_blocks_in_flag):
-    p.recvuntil(">")
+    p.recvuntil(b">")
     p.sendline(b"2")
-    p.recvuntil(":")
+    p.recvuntil(b":")
     p.sendline(b"0"*64) #To get the xor of 0 and the hash
-    hashes.append(p.recvuntil("Menu").decode().splitlines()[-2].split()[-1])
+    hashes.append(p.recvuntil(b"Menu").decode().splitlines()[-2].split()[-1])
 
 # Increase counter
-p.recvuntil(">")
+p.recvuntil(b">")
 p.sendline(b"3")
-p.recvuntil("=")
+p.recvuntil(b"=")
 p.sendline(str(2**263+2**496+2**512-n_blocks_in_flag).encode())
 
 # Get flag encrypted with the hash we can figure out
-p.recvuntil(">")
+p.recvuntil(b">")
 p.sendline(b"1")
-encrypted_flag = p.recvuntil("Menu").decode().splitlines()[-2].split()[-1]
+encrypted_flag = p.recvuntil(b"Menu").decode().splitlines()[-2].split()[-1]
 print(encrypted_flag)
 
 # Perform hash extension hack to figure out key
