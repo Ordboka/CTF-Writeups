@@ -29,7 +29,7 @@ After the CTF I learned that if you instead were to use [CADO-NFS](https://cado-
 
 ## Pohlig-Hellman
 
-My next idea was to check the factors of $p-1$ since if $p-1$ has small factors we can use the Pohlig-Hellman algorithm to find an $a$ satisfying $a\equiv key \mod f$ for some factor $f$. Using the Chinese remainder theorem we could then combine these factors and get $b\equiv key \mod \prod f_i$ where $\prod f_i $ divides $p-1$.
+My next idea was to check the factors of $p-1$ since if $p-1$ has small factors we can use the Pohlig-Hellman algorithm to find an $a$ satisfying $a\equiv key \mod f$ for some factor $f$. Using the Chinese remainder theorem we could then combine these factors and get $b\equiv key \mod \prod f_i$ where $\prod f_i$ divides $p-1$.
 
 Factoring $p-1$ gives us $p-1 = 2 * 19 * 151 * 577 * 67061 * 18279232319 * 111543376699 * 9213409941746658353293481$. Looking at the factors they don't seem too big, so I went and implemented the Pohlig-Hellman algorithm as described on [Wikipedia](https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm#The_general_algorithm).
 
@@ -58,7 +58,7 @@ for f, _ in fact:
 x = crt(xs, mods)
 ```
 
-Sadly, this also didn't work. The `discrete_log` function in SageMath actually uses Pohlig-Hellman, so this is not really a surprise. However, if I instead only focus on all but the last factor of $p-1$ it successfully finds an answer. Of course this answer $x$ is just $key\equiv x \mod \prod f_j$ where $\prod f_j = \frac{p}{f_l} $ where $f_l$ is the last factor.
+Sadly, this also didn't work. The `discrete_log` function in SageMath actually uses Pohlig-Hellman, so this is not really a surprise. However, if I instead only focus on all but the last factor of $p-1$ it successfully finds an answer. Of course this answer $x$ is just $key\equiv x \mod \prod f_j$ where $\prod f_j = \frac{p}{f_l}$ where $f_l$ is the last factor.
 
 ## AES Key
 
