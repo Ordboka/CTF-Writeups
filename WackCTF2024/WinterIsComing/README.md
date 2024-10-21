@@ -4,7 +4,7 @@
 ## Understanding the task
 Looking at the [program.py](chal/program.py) script we can see a program that takes a message from the user, verifies that it is a message that has been properly signed, and then if it is executes the command given in the message. The goal for us is to send the server a message that will make it execute the command printflag.
 
-In addition to [program.py](chal/progam.py) we are also given [pubkey.py](chal/pubkey.py) which contains 200 different public keys. Each public key consists of a list of 16 256 bit values.
+In addition to [program.py](chal/program.py) we are also given [pubkey.py](chal/pubkey.py) which contains 200 different public keys. Each public key consists of a list of 16 256 bit values.
 
 Finally we are given [mim.pcap](chal/mim.pcap) which consists of some random internet traffic, but mostly communication between a client and a server where the client sends a lot of valid messages to the server all being echo commands. 71 messages back and forth in total.
 
