@@ -1,5 +1,5 @@
 # Winter is coming (Crypto 500 points)
-**Keywords: Hash, Novel signature scheme**
+**Keywords: Hash, Winternitz One Time Signature Scheme**
 
 ## Understanding the task
 Looking at the [program.py](chal/program.py) script we can see a program that takes a message from the user, verifies that it is a message that has been properly signed, and then if it is executes the command given in the message. The goal for us is to send the server a message that will make it execute the command printflag.
@@ -10,7 +10,7 @@ Finally we are given [mim.pcap](chal/mim.pcap) which consists of some random int
 
 ## Understanding the signature scheme
 
-This was a signature schema I at least had never seen before so the first thing I needed to do was to understand it. The basics of it is that the messages is hashed with SHA256, divided into 16 blocks, each becoming a 16 bit integer. The client provides 16 256 bit values. Then the server to verify the message takes the 16 16 bit integers ($mh$) from the message, the 16 256 bit values from the public key indicated by the message to use ($pk$), and the 16 256 bit values of the signature ($s$). For each of these 16 it checks that if the signature is hashed $2^{16}-mh$ times it equals $pk$. If this is true for all 16 the message is considered valid.
+This was a signature schema I at least had never seen before so the first thing I needed to do was to understand it (I have later been told it is the [Winternitz One Time Signature Scheme](https://sphere10.com/articles/cryptography/pqc/wots) with checksums missing). The basics of it is that the messages is hashed with SHA256, divided into 16 blocks, each becoming a 16 bit integer. The client provides 16 256 bit values. Then the server to verify the message takes the 16 16 bit integers ($mh$) from the message, the 16 256 bit values from the public key indicated by the message to use ($pk$), and the 16 256 bit values of the signature ($s$). For each of these 16 it checks that if the signature is hashed $2^{16}-mh$ times it equals $pk$. If this is true for all 16 the message is considered valid.
 
 After understanding how the validation worked I had to try to figure out how the signatures was created. As hashing functions are famously a one way function I knew that it would not be possible for the creators of the signature to work backwards from the public key. Instead I had to figure out what the private key was, in relation to the public key. What I figured out is that the private key is probably just 16 random values, but that the public key are these values all hashed $2^{16}$ times. This way when the client wants to create a signature it hash the private key $mh$ times and get the signature it needs.
 
